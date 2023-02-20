@@ -1,15 +1,18 @@
 ﻿namespace StravaClone
 {
-	internal class Activity
+	public class Activity
 	{
 		public User User { get; set; }
 		public DateTime DateTime { get; set; }
 		public string Location { get; set; }
 		public string ActivityName { get; set; }
-		public Photos Photos { get; set; }
-		public Achievement[] Achievements { get; set; }
+		public List<Photos>? Photos { get; set; }
+		public List<Achievement>? Achievements { get; set; }
 
-		public Activity() { }
+		public Activity()
+		{
+
+		}
 
 		public void Start()
 		{
