@@ -1,9 +1,8 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-namespace StravaClone
+﻿namespace StravaClone
 {
 	public class Program
 	{
+
 		static void Main(string[] args)
 		{
 			//Leaderboard.GetLeaderboard();
@@ -36,20 +35,21 @@ namespace StravaClone
 			activity.Achievements = new List<Achievement>() { achievement };
 
 
+			//Create a collection
 			var users = new List<User>
 			{
 				new User()
 				{
 					FirstName = "John",
-					LastName = "Doe,",
+					LastName = "Doe",
 					Email = "johndoe@gmail.com",
 					Password = "hgf123",
 					Age = 16
 				},
 				new User()
 				{
-					FirstName = "Dmitriy",
-					LastName = "Rosca,",
+					FirstName = "Elena",
+					LastName = "Rosca",
 					Email = "drosca@gmail.com",
 					Password = "asd123zxc",
 					Age = 70
@@ -57,14 +57,15 @@ namespace StravaClone
 				new User()
 				{
 					FirstName = "Steven",
-					LastName = "Hawk,",
+					LastName = "Hawk",
 					Email = "sh@gmail.com",
 					Password = "zxcgfd34r",
 					Age = 30
 				}
 			};
 
-			var byAgeDelegate = new OrderByAgeDelegate(OrderByAge);
+			//Manipulate collection via delegates
+			var byAgeDelegate = new OrderByAgeDelegate(Delegates.OrderByAge);
 			var sortedUsers = byAgeDelegate(users);
 			Console.WriteLine("sort by age");
 			foreach (var sortedUser in sortedUsers)
@@ -72,7 +73,7 @@ namespace StravaClone
 				Console.WriteLine($"{sortedUser.FirstName} - {sortedUser.Age}");
 			}
 
-			var teensDelegate = new GetTeensDelegate(GetTeens);
+			var teensDelegate = new GetTeensDelegate(Delegates.GetTeens);
 			var teens = teensDelegate(users);
 			Console.WriteLine("teens");
 			foreach (var teen in teens)
@@ -80,7 +81,7 @@ namespace StravaClone
 				Console.WriteLine($"{teen.FirstName} - {teen.Age}");
 			}
 
-			var adultsDelegate = new GetAdultsDelegate(GetAdults);
+			var adultsDelegate = new GetAdultsDelegate(Delegates.GetAdults);
 			var adults = adultsDelegate(users);
 			Console.WriteLine("adults");
 			foreach (var adult in adults)
@@ -88,7 +89,7 @@ namespace StravaClone
 				Console.WriteLine($"{adult.FirstName} - {adult.Age}");
 			}
 
-			var seniorsDelegate = new GetSeniorsDelegate(GetSeniors);
+			var seniorsDelegate = new GetSeniorsDelegate(Delegates.GetSeniors);
 			var seniors = seniorsDelegate(users);
 			Console.WriteLine("seniors");
 			foreach (var senior in seniors)
@@ -96,7 +97,44 @@ namespace StravaClone
 				Console.WriteLine($"{senior.FirstName} - {senior.Age}");
 			}
 
+			//Rewrite using anonymous functions
+			GetArrayOfLastNamesDelegate getAndPrintLastNames = delegate(List<User> userList)
+			{
+				var lastNames = userList.Select(e => e.LastName).ToArray();
+				Console.WriteLine("last names:");
+				foreach (var lastName in lastNames)
+				{
+					Console.WriteLine(lastName);
+				}
+				
+				return lastNames;
+			};
 			
+			getAndPrintLastNames(users);
+
+			//lambda expressions
+			PrintPasswordsDelegate printPasswordsDelegate = (users) =>
+			{
+				Console.WriteLine("passwords:");
+				foreach (var user in users)
+				{
+					Console.WriteLine(user.Password);
+				}
+			};
+
+			printPasswordsDelegate(users);
+
+
+
+			//Using extension methods on the collection
+			var fistNames = MyExtensions.GetFirstNames(users);
+			Console.WriteLine("first names:");
+			foreach (var fistName in fistNames)
+			{
+				Console.WriteLine(fistName);
+			}
+
+			//Using Select/where operators on the collection
 			var emails = users.Select(e => e.Email).ToList();
 			Console.WriteLine("emails:");
 			foreach (var email in emails)
@@ -104,33 +142,6 @@ namespace StravaClone
 				Console.WriteLine(email);
 			}
 
-		}
-
-		public delegate List<User> OrderByAgeDelegate(List<User> users);
-
-		public delegate List<User> GetTeensDelegate(List<User> users);
-
-		public delegate List<User> GetAdultsDelegate(List<User> users);
-
-		public delegate List<User> GetSeniorsDelegate(List<User> users);
-
-		public static List<User> OrderByAge(List<User> users)
-		{
-			return users.OrderBy(e => e.Age).ToList();
-		}
-
-		public static List<User> GetTeens(List<User> users)
-		{
-			return users.Where(e => e.Age < 18).ToList();
-		}
-
-		public static List<User> GetAdults(List<User> users)
-		{
-			return users.Where(e => e.Age >= 18).ToList();
-		}
-		public static List<User> GetSeniors(List<User> users)
-		{
-			return users.Where(e => e.Age >= 65).ToList();
 		}
 	}
 }
