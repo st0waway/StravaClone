@@ -64,7 +64,7 @@ namespace StravaClone
 				}
 			};
 
-			OrderByAgeDelegate byAgeDelegate = new(OrderByAge);
+			var byAgeDelegate = new OrderByAgeDelegate(OrderByAge);
 			var sortedUsers = byAgeDelegate(users);
 			Console.WriteLine("sort by age");
 			foreach (var sortedUser in sortedUsers)
@@ -72,7 +72,7 @@ namespace StravaClone
 				Console.WriteLine($"{sortedUser.FirstName} - {sortedUser.Age}");
 			}
 
-			GetTeensDelegate teensDelegate = new(GetTeens);
+			var teensDelegate = new GetTeensDelegate(GetTeens);
 			var teens = teensDelegate(users);
 			Console.WriteLine("teens");
 			foreach (var teen in teens)
@@ -80,7 +80,7 @@ namespace StravaClone
 				Console.WriteLine($"{teen.FirstName} - {teen.Age}");
 			}
 
-			GetAdultsDelegate adultsDelegate = new(GetAdults);
+			var adultsDelegate = new GetAdultsDelegate(GetAdults);
 			var adults = adultsDelegate(users);
 			Console.WriteLine("adults");
 			foreach (var adult in adults)
@@ -88,7 +88,7 @@ namespace StravaClone
 				Console.WriteLine($"{adult.FirstName} - {adult.Age}");
 			}
 
-			GetSeniorsDelegate seniorsDelegate = new(GetSeniors);
+			var seniorsDelegate = new GetSeniorsDelegate(GetSeniors);
 			var seniors = seniorsDelegate(users);
 			Console.WriteLine("seniors");
 			foreach (var senior in seniors)
