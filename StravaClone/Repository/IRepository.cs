@@ -1,17 +1,12 @@
-﻿using System.Linq.Expressions;
-
-namespace StravaClone.Repository
+﻿namespace StravaClone.Repository
 {
-    internal interface IRepository<TEntity> where TEntity : class
+    internal interface IRepository<T> where T : User
     {
-	    TEntity Get(int id);
-	    IEnumerable<TEntity> GetAll();
-	    IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
-	    
-	    void Add(TEntity entity);
-	    void AddRange(IEnumerable<TEntity> entities);
-		
-	    void Remove(TEntity entity);
-		void RemoveRange(IEnumerable<TEntity> entities);
-    }
+	    IEnumerable<T> GetAll(); 
+		T GetUser(int id); 
+		void Create(T item);
+		void Update(T item);
+		void Delete(int id);
+		void Save();
+	}
 }

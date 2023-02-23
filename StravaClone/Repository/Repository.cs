@@ -3,53 +3,48 @@ using System.Linq.Expressions;
 
 namespace StravaClone.Repository
 {
-	public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+	public class Repository<T> : IRepository<T> where T : User
 	{
-		protected readonly DbContext Context;
+		protected readonly List<T> Context;
 
-		public Repository(DbContext context)
+		public Repository(List<T> context)
 		{
 			Context = context;
 		}
-
-		public TEntity Get(int id)
+		public IEnumerable<T> GetAll()
 		{
-			return Context.Set<TEntity>().Find(id);
+			return Context.ToList();
 		}
 
-		public IEnumerable<TEntity> GetAll()
+		public T GetUser(int id)
 		{
-			return Context.Set<TEntity>().ToList();
+			return Context.First(e => e.ID == id);
 		}
 
-		public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+		public void Create(T entity)
 		{
-			return Context.Set<TEntity>().Where(predicate);
+			Context.Add(entity);
 		}
 
-		public TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate)
+
+		public void Update(T entity)
 		{
-			return Context.Set<TEntity>().SingleOrDefault(predicate);
+			throw new NotImplementedException();
 		}
 
-		public void Add(TEntity entity)
+		public void Delete(int id)
 		{
-			Context.Set<TEntity>().Add(entity);
+			T entity = Context.First(e => e.ID == id);
+			if (entity != null)
+				Context.Remove(entity);
 		}
 
-		public void AddRange(IEnumerable<TEntity> entities)
+		public void Save()
 		{
-			Context.Set<TEntity>().AddRange(entities);
+			throw new NotImplementedException();
 		}
 
-		public void Remove(TEntity entity)
-		{
-			Context.Set<TEntity>().Remove(entity);
-		}
 
-		public void RemoveRange(IEnumerable<TEntity> entities)
-		{
-			Context.Set<TEntity>().RemoveRange(entities);
-		}
+
 	}
 }

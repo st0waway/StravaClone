@@ -127,7 +127,7 @@
 
 
 			//Using extension methods on the collection
-			var fistNames = MyExtensions.GetFirstNames(users);
+			var fistNames = users.GetFirstNames();
 			Console.WriteLine("first names:");
 			foreach (var fistName in fistNames)
 			{
