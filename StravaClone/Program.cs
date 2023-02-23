@@ -11,7 +11,8 @@
 				FirstName = "John",
 				LastName = "Doe,",
 				Email = "johndoe@gmail.com",
-				Password = "hgf123"
+				Password = "hgf123",
+				Age = 20
 			};
 			
 			var activity = new Activity()
