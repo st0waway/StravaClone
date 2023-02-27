@@ -7,6 +7,7 @@ namespace StravaClone
 
 		static void Main(string[] args)
 		{
+			LinqTopic.DoOperations();
 			//Leaderboard.GetLeaderboard();
 
 			var user = new User()
