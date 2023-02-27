@@ -1,6 +1,8 @@
-﻿namespace StravaClone
+﻿using StravaClone.Topics;
+
+namespace StravaClone
 {
-	public class Program
+    public class Program
 	{
 
 		static void Main(string[] args)

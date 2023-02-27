@@ -1,7 +1,4 @@
-﻿using System.Data.Entity;
-using System.Linq.Expressions;
-
-namespace StravaClone.Repository
+﻿namespace StravaClone.Repository
 {
 	public class Repository<T> : IRepository<T> where T : User
 	{
